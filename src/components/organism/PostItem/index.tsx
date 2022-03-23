@@ -26,7 +26,7 @@ const PostItem = ({ title, resume, uri }: PostItemProps): JSX.Element => {
           numberOfLines={4}
           size={15}
           family={typography.RobotoRegular}
-          color={theme.colors.gray50}
+          color={theme.colors.gray150}
           style={{ textAlign: 'left' }}
         >
           {resume}

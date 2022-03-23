@@ -25,13 +25,14 @@ export const ViewSelectOder = styled.View`
 
 export const ViewTitle = styled.View`
   flex-direction: row;
-  padding-bottom: 15px;
   align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
   justify-content: space-between;
 `;
 
 export const ViewFlatList = styled.View`
   width: 100%;
-  height: 350px;
-  padding-top: 10px;
+  height: 300px;
+  flex-direction: row;
 `;
