@@ -8,8 +8,10 @@ export default {
     primary: '#3cc6aa',
     white: '#FFF',
     background: '#fff',
-    gray100: '#535353',
     gray500: '#6B6D74',
+    gray100: '#535353',
+    gray50: '#868686',
+    orange: '#FDA506',
     black: '#000',
   },
 

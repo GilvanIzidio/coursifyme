@@ -51,7 +51,7 @@ const SelectPicker = ({
   return (
     <Container>
       <Picker
-        style={{ marginLeft: 5 }}
+        style={{ marginLeft: 5, marginRight: 5, backgroundColor: 'white' }}
         mode="dropdown"
         dropdownIconColor={theme.colors.primary}
         dropdownIconRippleColor={theme.colors.white}
@@ -62,7 +62,7 @@ const SelectPicker = ({
         }}
       >
         <Picker.Item
-          style={{ color: 'black', backgroundColor: 'white', fontSize: 16 }}
+          style={{ color: 'black', backgroundColor: 'white', fontSize: 14 }}
           fontFamily={theme.font.family}
           label="Selecione"
           key="default"
