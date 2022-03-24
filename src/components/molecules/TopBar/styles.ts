@@ -3,7 +3,7 @@ import theme from '../../../styles/theme';
 
 export const Container = styled.View`
   width: 100%;
-  height: 70px;
+  height: 80px;
   background-color: ${theme.colors.background};
 `;
 

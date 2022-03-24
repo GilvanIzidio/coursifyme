@@ -7,11 +7,12 @@ type PostItemProps = {
   title: string;
   resume: string;
   uri: string;
+  onPress: () => void;
 };
 
-const PostItem = ({ title, resume, uri }: PostItemProps): JSX.Element => {
+const PostItem = ({ title, resume, uri, onPress }: PostItemProps): JSX.Element => {
   return (
-    <Container style={theme.shadowStyle} activeOpacity={0.8}>
+    <Container style={theme.shadowStyle} activeOpacity={0.8} onPress={onPress}>
       <PostImage
         source={{
           uri,

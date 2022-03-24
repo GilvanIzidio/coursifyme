@@ -1,18 +1,19 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { WebView } from 'react-native-webview';
 import TopBar from '../../components/molecules/TopBar';
-import FooteerCredits from '../../components/organism/FooteerCredits';
+import { AppStackRoutesParamList } from '../../routes/index.routes';
 import { Container, Content } from './styles';
 
-const PostDetail = (): JSX.Element => {
+type PostDetailProps = NativeStackScreenProps<AppStackRoutesParamList, 'PostDetail'>;
+
+const PostDetail = ({ route: { params } }: PostDetailProps): JSX.Element => {
   return (
     <Container>
-      <TopBar />
-      <TopBar />
-      <ScrollView style={{ flex: 1 }}>
-        <></>
-      </ScrollView>
-      <FooteerCredits />
+      <WebView source={{ uri: params.url }} />
+      <Content>
+        <TopBar />
+      </Content>
     </Container>
   );
 };

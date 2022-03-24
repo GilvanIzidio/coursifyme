@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TopBar from '../../components/molecules/TopBar';
 import Typograph from '../../components/atoms/Typograph';
 import theme, { typography } from '../../styles/theme';
@@ -9,9 +11,10 @@ import FooteerCredits from '../../components/organism/FooteerCredits';
 import { getPostByCategoryId, getImageBatchImageUrl } from '../../services/PostService';
 import Post from '../../models/Post';
 import PostItemSkeleton from '../../components/organism/PostItem/Skeleton';
-import { Container, Content, ViewSelectOder, ViewFlatList, ViewTitle, View } from './styles';
 import Media from '../../models/Media';
 import PostDataCompleted from '../../models/PostCompleted';
+import { Container, Content, ViewSelectOder, ViewFlatList, ViewTitle, View } from './styles';
+import { AppStackRoutesParamList } from '../../routes/index.routes';
 
 const Home = (): JSX.Element => {
   const [pickerValue, setPickerValue] = useState('');
@@ -22,6 +25,8 @@ const Home = (): JSX.Element => {
   const [loadingOnlineCourses, setLoadingOnlineCourses] = useState(false);
   const [loadingDigitalMarketingCourses, setLoadingDigitalMarketingCourses] = useState(false);
   const [loadingTutorialsCourses, setLoadingTutorialsCourses] = useState(false);
+
+  const { navigate } = useNavigation<NativeStackNavigationProp<AppStackRoutesParamList>>();
 
   const getImagesOnlineCourse = async (imageIds: number[]) => {
     return getImageBatchImageUrl(imageIds);
@@ -130,7 +135,7 @@ const Home = (): JSX.Element => {
                   ))}
                 </>
               ) : (
-                <PostList data={onlineCourses} />
+                <PostList data={onlineCourses} onPress={url => navigate('PostDetail', { url })} />
               )}
             </ViewFlatList>
             <ViewTitle>
@@ -149,7 +154,10 @@ const Home = (): JSX.Element => {
                   ))}
                 </>
               ) : (
-                <PostList data={digitalMarketingCourses} />
+                <PostList
+                  data={digitalMarketingCourses}
+                  onPress={url => navigate('PostDetail', { url })}
+                />
               )}
             </ViewFlatList>
             <ViewTitle>
@@ -168,7 +176,10 @@ const Home = (): JSX.Element => {
                   ))}
                 </>
               ) : (
-                <PostList data={tutorialsCourses} />
+                <PostList
+                  data={tutorialsCourses}
+                  onPress={url => navigate('PostDetail', { url })}
+                />
               )}
             </ViewFlatList>
           </View>

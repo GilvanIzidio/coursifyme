@@ -6,15 +6,22 @@ import PostItem from '../../organism/PostItem';
 
 type PostListProps = {
   data: PostDataCompleted[];
-  onChange?: () => void;
+  onPress: (url: string) => void;
 };
 
-const PostList = ({ data, onChange }: PostListProps): JSX.Element => {
+const PostList = ({ data, onPress }: PostListProps): JSX.Element => {
   const renderItem = ({
-    item: { title, excerpt, urlImage },
+    item: { title, excerpt, urlImage, guid },
   }: ListRenderItemInfo<PostDataCompleted>) => {
     const replacedResume = removeHtmlAttributes(excerpt.rendered);
-    return <PostItem title={title.rendered} resume={replacedResume} uri={urlImage} />;
+    return (
+      <PostItem
+        title={title.rendered}
+        resume={replacedResume}
+        uri={urlImage}
+        onPress={() => onPress(guid.rendered)}
+      />
+    );
   };
 
   const separatorComponent = () => {
@@ -29,6 +36,7 @@ const PostList = ({ data, onChange }: PostListProps): JSX.Element => {
       initialNumToRender={5}
       onEndReachedThreshold={0.1}
       horizontal
+      showsHorizontalScrollIndicator={false}
       keyExtractor={item => item.id}
       renderItem={renderItem}
       ItemSeparatorComponent={separatorComponent}

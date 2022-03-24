@@ -1,5 +1,8 @@
 type Post = {
   id: string;
+  guid: {
+    rendered: string;
+  };
   title: {
     rendered: string;
   };
@@ -10,7 +13,6 @@ type Post = {
     rendered: string;
   };
   featured_media: number;
-  urlImage?: string;
 };
 
 export default Post;
