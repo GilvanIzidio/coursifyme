@@ -3,7 +3,7 @@ import Home from './screens/Home';
 import PostDetail from './screens/PostDetail';
 
 const App = (): JSX.Element => {
-  return <PostDetail />;
+  return <Home />;
 };
 
 export default App;

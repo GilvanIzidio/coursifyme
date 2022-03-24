@@ -16,9 +16,7 @@ export const getPostByCategoryId = async (categoryId: string): Promise<Post[]> =
 export const getImageBatchImageUrl = async (ids: number[]): Promise<Media[]> => {
   const { data } = await api.get<Media[]>('/media', {
     params: {
-      include: ids.map(item => {
-        return item;
-      }),
+      include: ids,
     },
     timeout: 4000,
     timeoutErrorMessage: 'Network Error',

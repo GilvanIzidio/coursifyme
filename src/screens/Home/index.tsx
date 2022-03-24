@@ -1,31 +1,58 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Alert, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Alert, ScrollView, TouchableOpacity } from 'react-native';
 import TopBar from '../../components/molecules/TopBar';
 import Typograph from '../../components/atoms/Typograph';
 import theme, { typography } from '../../styles/theme';
 import SelectPicker from '../../components/atoms/SelectPicker';
 import PostList from '../../components/molecules/PostList';
 import FooteerCredits from '../../components/organism/FooteerCredits';
-import { getPostByCategoryId } from '../../services/PostService';
-import { Container, Content, ViewSelectOder, ViewFlatList, ViewTitle, View } from './styles';
+import { getPostByCategoryId, getImageBatchImageUrl } from '../../services/PostService';
 import Post from '../../models/Post';
 import PostItemSkeleton from '../../components/organism/PostItem/Skeleton';
+import { Container, Content, ViewSelectOder, ViewFlatList, ViewTitle, View } from './styles';
+import Media from '../../models/Media';
+import PostDataCompleted from '../../models/PostCompleted';
 
 const Home = (): JSX.Element => {
   const [pickerValue, setPickerValue] = useState('');
-  const [onlineCourses, setOnlineCourses] = useState<Post[]>([] as Post[]);
-  const [digitalMarketingCourses, setDigitalMarketingCourses] = useState<Post[]>([] as Post[]);
-  const [tutorialsCourses, setTutorialsCourses] = useState<Post[]>([] as Post[]);
+  const [onlineCourses, setOnlineCourses] = useState<PostDataCompleted[]>([]);
+  const [digitalMarketingCourses, setDigitalMarketingCourses] = useState<PostDataCompleted[]>([]);
+  const [tutorialsCourses, setTutorialsCourses] = useState<PostDataCompleted[]>([]);
 
   const [loadingOnlineCourses, setLoadingOnlineCourses] = useState(false);
   const [loadingDigitalMarketingCourses, setLoadingDigitalMarketingCourses] = useState(false);
   const [loadingTutorialsCourses, setLoadingTutorialsCourses] = useState(false);
 
+  const getImagesOnlineCourse = async (imageIds: number[]) => {
+    return getImageBatchImageUrl(imageIds);
+  };
+
+  const prepareDataForAddImageUrl = (data: Post[]) => {
+    const imageIdForSearch = data.map(item => {
+      return item.featured_media;
+    });
+    return imageIdForSearch;
+  };
+
+  const makePostDataCompleted = (imagesData: Media[], posts: Post[]): PostDataCompleted[] => {
+    return posts.map(post => {
+      const image = imagesData.find(item => {
+        return item.id === post.featured_media;
+      });
+
+      return {
+        ...post,
+        urlImage: image?.guid.rendered ?? ' ',
+      };
+    });
+  };
+
   const getAllOnlineCourse = useCallback(async () => {
     try {
       setLoadingOnlineCourses(true);
-      const response = await getPostByCategoryId('82');
-      setOnlineCourses(response);
+      const posts = await getPostByCategoryId('82');
+      const imagesData = await getImagesOnlineCourse(prepareDataForAddImageUrl(posts));
+      setOnlineCourses(makePostDataCompleted(imagesData, posts));
     } catch (error: any) {
       Alert.alert(JSON.stringify(error));
     } finally {
@@ -36,8 +63,9 @@ const Home = (): JSX.Element => {
   const getAllDigitalMarketingCourse = useCallback(async () => {
     try {
       setLoadingDigitalMarketingCourses(true);
-      const response = await getPostByCategoryId('234');
-      setDigitalMarketingCourses(response);
+      const posts = await getPostByCategoryId('234');
+      const imagesData = await getImagesOnlineCourse(prepareDataForAddImageUrl(posts));
+      setDigitalMarketingCourses(makePostDataCompleted(imagesData, posts));
     } catch (error: any) {
       Alert.alert(JSON.stringify(error));
     } finally {
@@ -48,8 +76,9 @@ const Home = (): JSX.Element => {
   const getAllTutorialsCourse = useCallback(async () => {
     try {
       setLoadingTutorialsCourses(true);
-      const response = await getPostByCategoryId('1171');
-      setTutorialsCourses(response);
+      const posts = await getPostByCategoryId('1171');
+      const imagesData = await getImagesOnlineCourse(prepareDataForAddImageUrl(posts));
+      setTutorialsCourses(makePostDataCompleted(imagesData, posts));
     } catch (error: any) {
       Alert.alert(JSON.stringify(error));
     } finally {
