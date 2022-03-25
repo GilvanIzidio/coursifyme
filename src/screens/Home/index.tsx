@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { Alert, Linking, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TopBar from '../../components/molecules/TopBar';
@@ -7,7 +7,7 @@ import Typograph from '../../components/atoms/Typograph';
 import theme, { typography } from '../../styles/theme';
 import SelectPicker from '../../components/atoms/SelectPicker';
 import PostList from '../../components/molecules/PostList';
-import FooteerCredits from '../../components/organism/FooteerCredits';
+import FooterCredits from '../../components/organism/FooterCredits';
 import { getPostByCategoryId, getImageBatchImageUrl } from '../../services/PostService';
 import Post from '../../models/Post';
 import PostItemSkeleton from '../../components/organism/PostItem/Skeleton';
@@ -183,7 +183,7 @@ const Home = (): JSX.Element => {
               )}
             </ViewFlatList>
           </View>
-          <FooteerCredits />
+          <FooterCredits onPress={() => Linking.openURL('https://coursify.me')} />
         </ScrollView>
       </Content>
     </Container>

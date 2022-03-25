@@ -6,7 +6,11 @@ import ButtonFilled from '../../atoms/ButtonFilled';
 import Typograph from '../../atoms/Typograph';
 import { Container } from './styles';
 
-const FooteerCredits = (): JSX.Element => {
+type FooterCreditsProps = {
+  onPress: () => void;
+};
+
+const FooterCredits = ({ onPress }: FooterCreditsProps): JSX.Element => {
   return (
     <Container>
       <Image source={logoWhite} />
@@ -19,9 +23,9 @@ const FooteerCredits = (): JSX.Element => {
         O Coursify.me é uma plataforma de ensino a distância,{'\n'}onde qualquer pessoa ou empresa
         pode construir seu {'\n'}EAD e vender cursos pela internet.
       </Typograph>
-      <ButtonFilled>Quero conhecer a plataforma!</ButtonFilled>
+      <ButtonFilled onPress={onPress}>Quero conhecer a plataforma!</ButtonFilled>
     </Container>
   );
 };
 
-export default FooteerCredits;
+export default FooterCredits;
